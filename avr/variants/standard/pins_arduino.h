@@ -64,12 +64,11 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 static const uint8_t SDA = PIN_WIRE_SDA;
 
 // Interrupts
-#define EXTERNAL_NUM_INTERRUPTS    (8)
-#define digitalPinToInterrupt(p)   (((p) >= 0 && (p) <= 15) ? (p) : NOT_AN_INTERRUPT)
-#define digitalPinToPCICR(p)    ((((p) >= 0) && ((p) <= 15)) || ((p) == 0) ? (&PCICR) : ((uint8_t*)0))
-#define digitalPinToPCICRbit(p) ((((p) >= 0) && ((p) <= 15)) ? 0 : ((((p) == 0)  ? 1 : 0)))
-#define digitalPinToPCMSK(p)    ((((p) >= 0) && ((p) <= 15)) ? (&PCMSK0) : ((((p) == 0)  ? (&PCMSK1) : ((uint8_t*)0))))
-#define digitalPinToPCMSKbit(p) ((((p) >= 0) && ((p) <= 15)) ? ((p) - 0) : (((p) ==  0) ? 1 : 0))
+#define EXTERNAL_NUM_INTERRUPTS    (16)
+#define digitalPinToPCICR(p)    ((((p) >= 0) && ((p) <= 15)) ? (&PCICR) : ((uint8_t*)0))
+#define digitalPinToPCICRbit(p) ((((p) >= 8) && ((p) <= 15)) ? 1 : 0)
+#define digitalPinToPCMSK(p)    ((((p) >= 8) && ((p) <= 15)) ? (&PCMSK1) : (((((p) >= 0) && ((p) <= 7))  ? (&PCMSK0) : ((uint8_t*)0))))
+#define digitalPinToPCMSKbit(p) ((((p) >= 8) && ((p) <= 15)) ? ((p) - 8) : p)
 
 // Analog pins
 #define PIN_A0   (45)
