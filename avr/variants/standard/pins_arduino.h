@@ -41,30 +41,107 @@
 #define NUM_ANALOG_INPUTS           8
 #define analogInputToDigitalPin(p) (((p) < 8) ? (p) + 45 : -1)
 #define digitalPinHasPWM(p)        (((p) >= 3 && (p) <= 5) || ((p) >= 12 && (p) <= 15))
-#define digitalPinToInterrupt(p)   ((p) == 15 ? 0 : NOT_AN_INTERRUPT)
+#define analogPinToChannel(p)      ((p) < NUM_ANALOG_INPUTS ? (p) : (p) >= 45 ? (p) - 45 : -1)
 
-static const uint8_t SS   = 8;
-static const uint8_t SCK  = 9;
-static const uint8_t MOSI = 10;
-static const uint8_t MISO = 11;
+// SPI defs
+#define PIN_SPI_SS    (8)
+#define PIN_SPI_SCK   (9)
+#define PIN_SPI_MOSI  (10)
+#define PIN_SPI_MISO  (11)
+static const uint8_t SS   = PIN_SPI_SS;
+static const uint8_t SCK  = PIN_SPI_SCK;
+static const uint8_t MOSI = PIN_SPI_MOSI;
+static const uint8_t MISO = PIN_SPI_MISO;
 
 #define LED_BUILTIN 13
 #define BUZZER 13
 #define LIGHT_SENSOR 47 // LDR connected to A0
 
-static const uint8_t SDA = 18;
-static const uint8_t SCL = 19;
+// i2c
+#define PIN_WIRE_SCL  (18)
+#define PIN_WIRE_SDA  (19)
+static const uint8_t SCL = PIN_WIRE_SCL;
+static const uint8_t SDA = PIN_WIRE_SDA;
 
-static const uint8_t A0 = 45;
-static const uint8_t A1 = 46;
-static const uint8_t A2 = 47;
-static const uint8_t A3 = 48;
-static const uint8_t A4 = 49;
-static const uint8_t A5 = 50;
-static const uint8_t A6 = 51;
-static const uint8_t A7 = 52;
+// Interrupts
+#define EXTERNAL_NUM_INTERRUPTS    (8)
+#define digitalPinToInterrupt(p)   (((p) >= 0 && (p) <= 15) ? (p) : NOT_AN_INTERRUPT)
+#define digitalPinToPCICR(p)    ((((p) >= 0) && ((p) <= 15)) || ((p) == 0) ? (&PCICR) : ((uint8_t*)0))
+#define digitalPinToPCICRbit(p) ((((p) >= 0) && ((p) <= 15)) ? 0 : ((((p) == 0)  ? 1 : 0)))
+#define digitalPinToPCMSK(p)    ((((p) >= 0) && ((p) <= 15)) ? (&PCMSK0) : ((((p) == 0)  ? (&PCMSK1) : ((uint8_t*)0))))
+#define digitalPinToPCMSKbit(p) ((((p) >= 0) && ((p) <= 15)) ? ((p) - 0) : (((p) ==  0) ? 1 : 0))
 
+// Analog pins
+#define PIN_A0   (45)
+#define PIN_A1   (46)
+#define PIN_A2   (47)
+#define PIN_A3   (48)
+#define PIN_A4   (49)
+#define PIN_A5   (50)
+#define PIN_A6   (51)
+#define PIN_A7   (52)
+static const uint8_t A0 = PIN_A0;
+static const uint8_t A1 = PIN_A1;
+static const uint8_t A2 = PIN_A2;
+static const uint8_t A3 = PIN_A3;
+static const uint8_t A4 = PIN_A4;
+static const uint8_t A5 = PIN_A5;
+static const uint8_t A6 = PIN_A6;
+static const uint8_t A7 = PIN_A7;
 
+#define PIN_PE0 0
+#define PIN_PE1 1
+#define PIN_PE2 2
+#define PIN_PE3 3
+#define PIN_PE4 4
+#define PIN_PE5 5
+#define PIN_PE6 6
+#define PIN_PE7 7
+#define PIN_PB0 8
+#define PIN_PB1 9
+#define PIN_PB2 10
+#define PIN_PB3 11
+#define PIN_PB4 12
+#define PIN_PB5 13
+#define PIN_PB6 14
+#define PIN_PB7 15
+#define PIN_PG3 16
+#define PIN_PG4 17
+#define PIN_PD0 18
+#define PIN_PD1 19
+#define PIN_PD2 20
+#define PIN_PD3 21
+#define PIN_PD4 22
+#define PIN_PD5 23
+#define PIN_PD6 24
+#define PIN_PD7 25
+#define PIN_PG0 26
+#define PIN_PG1 27
+#define PIN_PC0 28
+#define PIN_PC1 29
+#define PIN_PC2 30
+#define PIN_PC3 31
+#define PIN_PC4 32
+#define PIN_PC5 33
+#define PIN_PC6 34
+#define PIN_PC7 35
+#define PIN_PG2 36
+#define PIN_PA7 37
+#define PIN_PA6 38
+#define PIN_PA5 39
+#define PIN_PA4 40
+#define PIN_PA3 41
+#define PIN_PA2 42
+#define PIN_PA1 43
+#define PIN_PA0 44
+#define PIN_PF0 45
+#define PIN_PF1 46
+#define PIN_PF2 47
+#define PIN_PF3 48
+#define PIN_PF4 49
+#define PIN_PF5 50
+#define PIN_PF6 51
+#define PIN_PF7 52
 
 #ifdef ARDUINO_MAIN
 
